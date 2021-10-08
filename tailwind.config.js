@@ -7,6 +7,9 @@ module.exports = {
       colors: {
         primary: "#ff4800",
       },
+      fontFamily: {
+        body: ["Montserrat"],
+      },
     },
   },
   variants: {
