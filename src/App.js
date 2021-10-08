@@ -3,11 +3,11 @@ import Post from "./Post.js";
 
 function App() {
   return (
-    <div>
+    <main>
       {posts.map((post) => (
         <Post {...post} key={post.id} />
       ))}
-    </div>
+    </main>
   );
 }
 
