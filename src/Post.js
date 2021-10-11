@@ -1,4 +1,4 @@
-function Post({ id, title, body, name, date }) {
+function Post({ title, body, name, date }) {
   return (
     <article className="p-10 max-w-xl mx-auto my-5 bg-white rounded-xl shadow-md font-body">
       <h2 className="text-4xl text-black font-semibold mb-1">{title}</h2>

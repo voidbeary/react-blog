@@ -1,19 +1,34 @@
+import { useState } from "react";
+import Input from "./Input";
+
 function PostForm() {
+  const [title, setTitle] = useState("");
+  const [author, setAuthor] = useState("");
+
+  function handleTitleChange(event) {
+    setTitle(event.target.value);
+  }
+
+  function handleAuthorChange(event) {
+    setAuthor(event.target.value);
+  }
+
   return (
     <form className="flex flex-col p-10 max-w-xl mx-auto my-5 bg-blue-50 rounded-xl shadow-md font-body">
-      <label htmlFor="title">Title</label>
-      <input
+      <Input
+        value={title}
+        onChange={handleTitleChange}
+        label="Title"
         id="title"
-        className=" shadow-md focus:ring-2 focus:ring-blue-600 p-2 my-2  rounded-md"
-        placeholder="title"
-      ></input>
-
-      <label htmlFor="author">Author</label>
-      <input
+        required
+      />
+      <Input
+        value={author}
+        onChange={handleAuthorChange}
         className="shadow-md focus:ring-2 focus:ring-blue-600 p-2 my-2 rounded-md"
-        placeholder="author"
+        label="Author"
         id="author"
-      ></input>
+      />
       <label htmlFor="body">Body</label>
       <textarea
         id="body"
@@ -28,4 +43,5 @@ function PostForm() {
     </form>
   );
 }
+
 export default PostForm;
