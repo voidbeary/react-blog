@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Input from "./Input";
 
-function PostForm() {
+function PostForm({ onAddPost }) {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
 
@@ -12,9 +12,19 @@ function PostForm() {
   function handleAuthorChange(event) {
     setAuthor(event.target.value);
   }
+  function handleSubmit(event) {
+    event.preventDefault();
+    const form = event.target;
+    const userInputField = form.elements["body"];
+    const body = userInputField.value;
+    onAddPost(title, author, body);
+  }
 
   return (
-    <form className="flex flex-col p-10 max-w-xl mx-auto my-5 bg-blue-50 rounded-xl shadow-md font-body">
+    <form
+      onSubmit={handleSubmit}
+      className="flex flex-col p-10 max-w-xl mx-auto my-5 bg-blue-50 rounded-xl shadow-md font-body"
+    >
       <Input
         value={title}
         onChange={handleTitleChange}
