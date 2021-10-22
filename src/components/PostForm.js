@@ -3,10 +3,16 @@ import Input from "./Input";
 
 function PostForm({ onAddPost }) {
   const [title, setTitle] = useState("");
+  const [titleError, setTitleError] = useState("");
   const [author, setAuthor] = useState("");
 
-  function handleTitleChange(event) {
-    setTitle(event.target.value);
+  function handleTitleChange(value) {
+    if (!value) {
+      setTitleError("This field is required");
+    } else {
+      setTitleError("");
+    }
+    setTitle(value);
   }
 
   function handleAuthorChange(event) {
@@ -14,6 +20,10 @@ function PostForm({ onAddPost }) {
   }
   function handleSubmit(event) {
     event.preventDefault();
+
+    if (titleError) {
+      return;
+    }
     const form = event.target;
     const userInputField = form.elements["body"];
     const body = userInputField.value;
@@ -35,6 +45,7 @@ function PostForm({ onAddPost }) {
         onChange={handleTitleChange}
         label="Title"
         id="title"
+        error={titleError}
         required
       />
       <Input
