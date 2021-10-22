@@ -17,7 +17,12 @@ function PostForm({ onAddPost }) {
     const form = event.target;
     const userInputField = form.elements["body"];
     const body = userInputField.value;
-    onAddPost(title, author, body);
+    const id = `${Date.now()}`;
+    const dateObj = new Date();
+    const date = dateObj.toJSON();
+    const newPost = { title, author, body, id, date };
+
+    onAddPost(newPost);
   }
 
   return (

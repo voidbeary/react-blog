@@ -1,18 +1,20 @@
-import { posts as postsMocked } from "../posts.js";
 import Post from "./Post.js";
 import PostForm from "./PostForm.js";
 import { useState } from "react";
 
-const useMockPosts = process.env.REACT_APP_USE_MOCK_POSTS === "true";
+function getPosts() {
+  const PostsString = localStorage.posts || "[]";
+  const Posts = JSON.parse(PostsString);
+  return Posts;
+}
 
 function Posts() {
-  const [posts, setPosts] = useState(useMockPosts ? postsMocked : []);
-  function handleAddPost(title, author, body) {
-    const id = `${Date.now()}`;
-    const dateObj = new Date();
-    const date = dateObj.toJSON();
-    const newPost = { title, author, body, id, date };
-    setPosts([...posts, newPost]);
+  const [posts, setPosts] = useState(getPosts);
+
+  function handleAddPost(newPost) {
+    const newPosts = [...posts, newPost];
+    localStorage.setItem("posts", JSON.stringify(newPosts));
+    setPosts(newPosts);
   }
 
   return (
