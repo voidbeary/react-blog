@@ -1,29 +1,30 @@
 import { useState } from "react";
 import Input from "./Input";
+import { InputSubmit } from "./InputSubmit.js";
 
 function PostForm({ onAddPost }) {
   const [title, setTitle] = useState("");
   const [titleError, setTitleError] = useState("");
   const [author, setAuthor] = useState("");
+  const [isValid, setIsValid] = useState(false);
 
   function handleTitleChange(value) {
     if (!value) {
       setTitleError("This field is required");
+      setIsValid(false);
     } else {
       setTitleError("");
+      setIsValid(true);
     }
     setTitle(value);
   }
 
-  function handleAuthorChange(event) {
-    setAuthor(event.target.value);
+  function handleAuthorChange(value) {
+    setAuthor(value);
   }
   function handleSubmit(event) {
     event.preventDefault();
 
-    if (titleError) {
-      return;
-    }
     const form = event.target;
     const userInputField = form.elements["body"];
     const body = userInputField.value;
@@ -61,11 +62,7 @@ function PostForm({ onAddPost }) {
         className="shadow-md focus:ring-2 focus:ring-blue-600 p-2 my-2 rounded-md"
         placeholder="body"
       ></textarea>
-      <input
-        type="submit"
-        value="Submit"
-        className="bg-blue-600 text-white rounded-md py-2 mt-2 hover:bg-blue-800 shadow-md  focus:outline-none focus:ring-2 focus:ring-blue-600 cursor-pointer"
-      />
+      <InputSubmit isValid={isValid} />
     </form>
   );
 }
