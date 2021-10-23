@@ -1,8 +1,11 @@
 import { useState } from "react";
 import Input from "./Input";
 import { InputSubmit } from "./InputSubmit.js";
+import { savePost } from "../utils/postsStorage.js";
+import { useHistory } from "react-router-dom";
 
-function PostForm({ onAddPost }) {
+function PostForm() {
+  const history = useHistory();
   const [title, setTitle] = useState("");
   const [titleError, setTitleError] = useState("");
   const [author, setAuthor] = useState("");
@@ -32,8 +35,8 @@ function PostForm({ onAddPost }) {
     const dateObj = new Date();
     const date = dateObj.toJSON();
     const newPost = { title, author, body, id, date };
-
-    onAddPost(newPost);
+    savePost(newPost);
+    history.push("/");
   }
 
   return (
