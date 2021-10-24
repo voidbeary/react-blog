@@ -1,7 +1,6 @@
 import { useState } from "react";
 import Input from "./Input";
 import { InputSubmit } from "./InputSubmit.js";
-import { savePost } from "../utils/postsStorage.js";
 import { useHistory } from "react-router-dom";
 
 function PostForm() {
@@ -10,6 +9,7 @@ function PostForm() {
   const [titleError, setTitleError] = useState("");
   const [author, setAuthor] = useState("");
   const [isValid, setIsValid] = useState(false);
+  const [isSubmiting, setIsSubmiting] = useState(false);
 
   function handleTitleChange(value) {
     if (!value) {
@@ -28,15 +28,27 @@ function PostForm() {
   function handleSubmit(event) {
     event.preventDefault();
 
+    if (isSubmiting) {
+      return;
+    }
+
     const form = event.target;
     const userInputField = form.elements["body"];
     const body = userInputField.value;
-    const id = `${Date.now()}`;
-    const dateObj = new Date();
-    const date = dateObj.toJSON();
-    const newPost = { title, author, body, id, date };
-    savePost(newPost);
-    history.push("/");
+    const newPost = { title, author, body };
+    setIsSubmiting(true);
+    async function savePost() {
+      await fetch("http://localhost:3001/api/posts", {
+        method: "POST",
+        body: JSON.stringify(newPost),
+        headers: {
+          "Content-Type": "application/json; charset=UTF-8",
+        },
+      });
+      setIsSubmiting(false);
+      history.push("/");
+    }
+    savePost();
   }
 
   return (
@@ -65,7 +77,7 @@ function PostForm() {
         className="shadow-md focus:ring-2 focus:ring-blue-600 p-2 my-2 rounded-md"
         placeholder="body"
       ></textarea>
-      <InputSubmit isValid={isValid} />
+      <InputSubmit isValid={isValid && !isSubmiting} />
     </form>
   );
 }

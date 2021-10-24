@@ -1,5 +1,5 @@
-function Post({ title, body, author, date }) {
-  const dateObj = new Date(date);
+function Post({ title, body, author, createdAt }) {
+  const dateObj = new Date(createdAt);
   const localeDate = dateObj.toLocaleString();
   return (
     <article className="p-10 max-w-xl mx-auto my-5 bg-white rounded-xl shadow-md font-body">
