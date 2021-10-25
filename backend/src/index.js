@@ -1,6 +1,9 @@
 import express from "express";
 import { blogPostsRouter } from "./routes/blogPostsRouter.js";
 import mongoose from "mongoose";
+import path from "path";
+
+const __dirname = path.resolve();
 
 const DB_URL = process.env.DB_URL;
 const PORT = process.env.PORT || 3001;
@@ -22,6 +25,12 @@ async function main() {
   app.get("/api", function (req, res) {
     res.send("Hello World");
   });
+
+  if (process.env.NODE_ENV === "production") {
+    app.get("*", (req, res) => {
+      res.sendFile(path.resolve(__dirname, "../frontend/build", "index.html"));
+    });
+  }
 
   app.listen(PORT, () => {
     console.log("👂 Listening on port " + PORT);

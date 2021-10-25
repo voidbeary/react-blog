@@ -5,9 +5,11 @@
     "backend"
   ],
   "scripts": {
-    "start:fe": "env-cmd -f ./.env yarn workspace frontend run start",
-    "start:be": "env-cmd -f ./.env yarn workspace backend run start",
-    "start": "concurrently  \"yarn start:fe\" \"yarn start:be\""
+    "dev:fe": "env-cmd -f ./.env yarn workspace frontend run dev",
+    "dev:be": "env-cmd -f ./.env yarn workspace backend run dev",
+    "dev": "concurrently  \"yarn dev:fe\" \"yarn dev:be\"",
+    "build": "yarn workspace frontend run build",
+    "start": "yarn workspace backend start"
   },
   "dependencies": {
     "concurrently": "^6.3.0",
