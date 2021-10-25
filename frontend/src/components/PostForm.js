@@ -38,7 +38,7 @@ function PostForm() {
     const newPost = { title, author, body };
     setIsSubmiting(true);
     async function savePost() {
-      await fetch("http://localhost:3001/api/posts", {
+      await fetch("/api/posts", {
         method: "POST",
         body: JSON.stringify(newPost),
         headers: {
