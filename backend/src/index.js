@@ -1,7 +1,6 @@
 import express from "express";
 import { blogPostsRouter } from "./routes/blogPostsRouter.js";
 import mongoose from "mongoose";
-import cors from "cors";
 
 const DB_URL = process.env.DB_URL;
 const PORT = process.env.PORT || 3001;
@@ -13,11 +12,6 @@ async function main() {
 
   const app = express();
 
-  app.use(
-    cors({
-      origin: "http://localhost:3000",
-    })
-  );
   app.use(express.json());
   app.use((err, req, res, next) => {
     res.status(err.status);
