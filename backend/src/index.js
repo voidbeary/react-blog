@@ -2,6 +2,7 @@ import express from "express";
 import { blogPostsRouter } from "./routes/blogPostsRouter.js";
 import mongoose from "mongoose";
 import path from "path";
+import serveSpa from "serve-spa";
 
 const __dirname = path.resolve();
 
@@ -26,17 +27,7 @@ async function main() {
     res.send("Hello World");
   });
 
-  if (process.env.NODE_ENV === "production") {
-    app.get("*", (req, res) => {
-      if (req.path.endsWith(/\.(txt|json|png|ico|js|css|html)/)) {
-        res.sendFile(path.resolve(__dirname, "../frontend/build"));
-      } else {
-        res.sendFile(
-          path.resolve(__dirname, "../frontend/build", "index.html")
-        );
-      }
-    });
-  }
+  serveSpa(app, path.resolve(__dirname, "../frontend/build/"));
 
   app.listen(PORT, () => {
     console.log("👂 Listening on port " + PORT);
